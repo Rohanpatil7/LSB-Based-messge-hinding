@@ -54,16 +54,6 @@ image_label.place(x=150, y=400, width=300, height=100)
 message_label1 = Label(root, text='Message')
 message_label1.place(x=80,y=400)
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-messagebox1= tk.Text(root, wrap="word", width=40, height=5)
-messagebox1.place(x=150,y=400,width=300, height=100,)
-=======
-=======
->>>>>>> Stashed changes
-image_frame2 = Frame(root, width=400, height=280, relief="solid", borderwidth=2)
-image_frame2.place(x=550, y=20)  # Aligned with messagebox1
-
 messagebox1= ttk.Entry(root, width=50)
 messagebox1.place(x=150,y=400,width=300, height=100)
 >>>>>>> Stashed changes
