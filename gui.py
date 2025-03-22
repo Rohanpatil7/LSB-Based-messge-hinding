@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
+
+from tkinter import ttk,Text
 from tkinter.ttk import Label
 from tkinter import Frame
 from tkinter.messagebox import showinfo
@@ -52,8 +53,8 @@ image_label.place(x=150, y=400, width=300, height=100)
 message_label1 = Label(root, text='Message')
 message_label1.place(x=80,y=400)
 
-messagebox1= ttk.Entry(root, width=50)
-messagebox1.place(x=150,y=400,width=300, height=100)
+messagebox1= tk.Text(root, wrap="word", width=40, height=5)
+messagebox1.place(x=150,y=400,width=300, height=100,)
 
 button1 = ttk.Button(root, text="Encrypt")
 button1.place(x=250,y=550,width=120, height=60)
@@ -61,8 +62,8 @@ button1.place(x=250,y=550,width=120, height=60)
 message_label2 = Label(root, text='Secrete Message')
 message_label2.place(x=480,y=400)
 
-messagebox2= ttk.Entry(root, width=50)
-messagebox2.place(x=580,y=400,width=300, height=100)
+messagebox2= tk.Text(root, wrap="word", width=40, height=5)
+messagebox2.place(x=580,y=400,width=300, height=100,)
 
 button2 = ttk.Button(root, text="Decrypt")
 button2.place(x=650,y=550,width=120, height=60)
