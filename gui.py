@@ -22,8 +22,9 @@ def load_image(file_path):
     img = Image.open(file_path)
 
     img_width, img_height = img.size
+    
 
-    max_width, max_height = 250, 300  # The display size
+    max_width, max_height = 390, 280  # The display size
 
     ratio = min(max_width / img_width, max_height / img_height)
 
@@ -40,21 +41,29 @@ def load_image(file_path):
     image_label.place(x=x_offset, y=y_offset, width=new_width, height=new_height)
 
 choose_img_btn = ttk.Button(root, text="Choose Image", command=choose_image)
-choose_img_btn.place(x=80, y=350, width=120, height=40)
+choose_img_btn.place(x=200, y=325, width=120, height=40)
 
 # Frame for Image (Same size & position as messagebox1)
-image_frame = Frame(root, width=300, height=100, relief="solid", borderwidth=2)
-image_frame.place(x=150, y=400)  # Aligned with messagebox1
+image_frame1 = Frame(root, width=400, height=280, relief="solid", borderwidth=2)
+image_frame1.place(x=100, y=20)  # Aligned with messagebox1
 
 # Image Label (inside frame)
-image_label = Label(image_frame)
+image_label = Label(image_frame1)
 image_label.place(x=150, y=400, width=300, height=100)
 
 message_label1 = Label(root, text='Message')
 message_label1.place(x=80,y=400)
 
+<<<<<<< Updated upstream
 messagebox1= tk.Text(root, wrap="word", width=40, height=5)
 messagebox1.place(x=150,y=400,width=300, height=100,)
+=======
+image_frame2 = Frame(root, width=400, height=280, relief="solid", borderwidth=2)
+image_frame2.place(x=550, y=20)  # Aligned with messagebox1
+
+messagebox1= ttk.Entry(root, width=50)
+messagebox1.place(x=150,y=400,width=300, height=100)
+>>>>>>> Stashed changes
 
 button1 = ttk.Button(root, text="Encrypt")
 button1.place(x=250,y=550,width=120, height=60)
