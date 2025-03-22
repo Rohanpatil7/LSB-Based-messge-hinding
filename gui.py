@@ -54,9 +54,8 @@ image_label.place(x=150, y=400, width=300, height=100)
 message_label1 = Label(root, text='Message')
 message_label1.place(x=80,y=400)
 
-messagebox1= ttk.Entry(root, width=50)
+messagebox1= tk.Text(root, wrap="word", width=40, height=5)
 messagebox1.place(x=150,y=400,width=300, height=100)
->>>>>>> Stashed changes
 
 button1 = ttk.Button(root, text="Encrypt")
 button1.place(x=250,y=550,width=120, height=60)
