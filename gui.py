@@ -58,7 +58,7 @@ messagebox1= tk.Text(root, wrap="word", width=40, height=5)
 messagebox1.place(x=150,y=400,width=300, height=100)
 
 button1 = ttk.Button(root, text="Encrypt")
-button1.place(x=250,y=550,width=120, height=60)
+button1.place(x=250,y=530,width=120, height=60)
 
 message_label2 = Label(root, text='Secrete Message')
 message_label2.place(x=480,y=400)
@@ -67,8 +67,12 @@ messagebox2= tk.Text(root, wrap="word", width=40, height=5)
 messagebox2.place(x=580,y=400,width=300, height=100,)
 
 button2 = ttk.Button(root, text="Decrypt")
-button2.place(x=650,y=550,width=120, height=60)
+button2.place(x=650,y=530,width=120, height=60)
 
+password_label = Label(root, text='Password')
+password_label.place(x=80,y=600)
+password = ttk.Entry(root, show="*")
+password.place(x=150,y=600,width=700, height=30)
 
 # message = tk.StringVar()
 # message_label = tk.Label(text="Secrete Message:")
