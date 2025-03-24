@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import main
 from tkinter import ttk,Text
 from tkinter.ttk import Label
 from tkinter import Frame
@@ -57,7 +57,7 @@ message_label1.place(x=80,y=400)
 messagebox1= tk.Text(root, wrap="word", width=40, height=5)
 messagebox1.place(x=150,y=400,width=300, height=100)
 
-button1 = ttk.Button(root, text="Encrypt")
+button1 = ttk.Button(root, text="Encrypt",command=main.encrypt_and_hide)
 button1.place(x=250,y=530,width=120, height=60)
 
 message_label2 = Label(root, text='Secrete Message')
@@ -73,6 +73,10 @@ password_label = Label(root, text='Password')
 password_label.place(x=80,y=600)
 password = ttk.Entry(root, show="*")
 password.place(x=150,y=600,width=700, height=30)
+
+progress = ttk.Progressbar(root, orient="horizontal", length=700, mode="determinate")
+progress.place(x=150, y=640)
+
 
 # message = tk.StringVar()
 # message_label = tk.Label(text="Secrete Message:")
