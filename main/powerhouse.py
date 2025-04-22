@@ -10,10 +10,11 @@ import telegram
 import asyncio
 
 # Telegram Bot Token (Replace with your actual bot token)
-TELEGRAM_BOT_TOKEN = "7636098514:AAHbDD7H4g6zKxHp8dXk2wHAE5N53jY-KmQ"
+TELEGRAM_BOT_TOKEN = "enter your telegram bot token"
 
 # Allowed Contacts (Replace with actual contact numbers & corresponding chat IDs)
 ALLOWED_CONTACTS = {
+    conatact number : telegram id
 }
 
 # Function to send encryption key via Telegram if contact is authorized
