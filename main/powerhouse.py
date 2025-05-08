@@ -8,22 +8,38 @@ import base64
 import os
 import telegram
 
+
+# Function to decrypt the key
+MASTER_kEY = "NextCyber@2023"
+
 # Telegram Bot Token (Replace with your actual bot token)
 TELEGRAM_BOT_TOKEN = "7636098514:AAHbDD7H4g6zKxHp8dXk2wHAE5N53jY-KmQ"
 
 # Allowed Contacts (Replace with actual contact numbers & corresponding chat IDs)
 ALLOWED_CONTACTS = {
+<<<<<<< Updated upstream
     "9529440255": "7206195146",
     "9876543210": "CHAT_ID_FOR_9876543210"
+=======
+    9529440255: 7206195146,
+    9405895177: 8157014588,
+>>>>>>> Stashed changes
 }
 
 # Function to send encryption key via Telegram if contact is authorized
 def send_key_via_telegram(contact, key):
     if contact in ALLOWED_CONTACTS:
         try:
+
+            # Send the key to the authorized contact via Telegram
             bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
+<<<<<<< Updated upstream
             bot.send_message(chat_id=ALLOWED_CONTACTS[contact], text=f"🔐 Your Encryption Key: {key}")
             messagebox.showinfo("Success", f"Key sent to Telegram for {contact}!")
+=======
+            await bot.send_message(chat_id=ALLOWED_CONTACTS[contact], text=f"🔐 Your Encryption Key: {key}")
+            messagebox.showinfo("Success", f"Key sent to Telegram for {contact}! \n 🔑 Use the app with your shared decryption key to decode this.")
+>>>>>>> Stashed changes
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send key: {e}")
     else:
@@ -63,7 +79,21 @@ def hide_secret():
 
     try:
         crypto_steg.hide(input_image_path, output_image_path, encrypted_message)
+<<<<<<< Updated upstream
         send_key_via_telegram(contact_number.get(), encryption_key.get())  # Send key if contact is valid
+=======
+
+        # Removed as output_image_path is not relevant in extract_secret
+        contact = contact_number.get()
+        if not contact.isdigit():
+            messagebox.showerror("Error", "Contact number must be numeric!")
+            return
+        
+        # 🔐 Encrypt the key with MASTER_KEY before sending
+        encrypted_key_to_send = encrypt_message(encryption_key.get(), MASTER_kEY)
+        asyncio.run(send_key_via_telegram(int(contact), encrypted_key_to_send ))
+
+>>>>>>> Stashed changes
         messagebox.showinfo("Success", "Message hidden successfully!")
     except Exception as e:
         messagebox.showerror("Error", f"Failed to hide message: {e}")
@@ -74,18 +104,57 @@ def extract_secret():
     if not image_path or not encryption_key.get():
         messagebox.showerror("Error", "Please select an image and provide a key!")
         return
+<<<<<<< Updated upstream
 
     crypto_steg = CryptoSteganography("dummy_key")
     encrypted_message = crypto_steg.retrieve(image_path)
 
     if encrypted_message:
         decrypted_message = decrypt_message(encrypted_message, encryption_key.get())
+=======
+    
+    encrypted_input_key = encryption_key.get()
+
+     # Step 1: Decrypt the encrypted key using MASTER_kEY
+    actual_key = decrypt_message(encrypted_input_key, MASTER_kEY)
+
+    if not actual_key:
+        messagebox.showerror("Error", "Failed to decrypt the encryption key. Please check the encrypted key.")
+        return 
+
+    # key = encryption_key.get()
+    crypto_steg = CryptoSteganography(actual_key)
+
+    try:
+        encrypted_message = crypto_steg.retrieve(image_path)
+        if encrypted_message is None:
+            messagebox.showerror("Error", "No hidden message found in the image!")
+            return
+    
+
+        encrypted_message = crypto_steg.retrieve(image_path)
+        print("Retrieved Encrypted Message:", encrypted_message)
+
+        if encrypted_message is None:
+            messagebox.showerror("Error", "No hidden message found in the image!")
+            return
+
+        decrypted_message = decrypt_message(encrypted_message, actual_key)
+>>>>>>> Stashed changes
         if decrypted_message:
             messagebox.showinfo("Decrypted Message", decrypted_message)
         else:
             messagebox.showerror("Error", "Incorrect key! Unable to decrypt.")
+<<<<<<< Updated upstream
     else:
         messagebox.showerror("Error", "No hidden message found!")
+=======
+
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred: {e}")
+
+    
+>>>>>>> Stashed changes
 
 # Load and Display Image
 def load_image():
@@ -98,6 +167,28 @@ def load_image():
         img_tk = ImageTk.PhotoImage(img)
         image_label.config(image=img_tk)
         image_label.image = img_tk
+
+
+# Decrypt Key Function
+def decrypt_key():
+    encrypted_input = encrypted_key_input.get()
+    # key_input = decryption_key_input.get()
+    if not encrypted_input:
+        messagebox.showerror("Error", "Please enter both encrypted key and decryption key!")
+        return
+
+    # result = decrypt_message(encrypted_input, MASTER_kEY)
+    result2 = decrypt_message(encrypted_input, MASTER_kEY)
+    if result2:
+        decrypted_password_label.config(text=f"Decrypted Password: {result2}")
+    else:
+        messagebox.showerror("Error", "Decryption failed. Check your key or encrypted string.")
+    # if result:
+    #     decrypted_password_label.config(text=f"Decrypted Password: {result}")
+    # else:
+    #     messagebox.showerror("Error", "Decryption failed. Check your key or encrypted string.")
+
+
 
 # GUI Setup
 root = tk.Tk()
@@ -132,6 +223,24 @@ contact_number.pack(pady=5)
 # Hide and Extract Buttons
 tk.Button(root, text="Hide Message", command=hide_secret).pack(pady=10)
 tk.Button(root, text="Extract Message", command=extract_secret).pack(pady=5)
+
+# Separator
+tk.Label(root, text="------------------------").pack(pady=5)
+
+# Encrypted Key Decryption Section
+tk.Label(root, text="Enter Encrypted Key:").pack()
+encrypted_key_input = tk.Entry(root, width=40)
+encrypted_key_input.pack(pady=5)
+
+tk.Button(root, text="Decrypt Encrypted Key", command=decrypt_key).pack(pady=10) 
+
+# Label to display decrypted password
+decrypted_password_label = tk.Label(root, text="Decrypted Password: ")
+decrypted_password_label.pack(pady=5)
+
+# tk.Label(root, text="Decryption Key:").pack()
+# decryption_key_input = tk.Entry(root, width=40, show="*")
+# decryption_key_input.pack(pady=5)
 
 # Run the Application
 root.mainloop()
