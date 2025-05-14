@@ -11,16 +11,23 @@ import telegram
 import asyncio
 
 
+
 # Function to decrypt the key
 MASTER_kEY = "NextCyber@2023"
 
+
+
 # Telegram Bot Token (Replace with your actual bot token)
-TELEGRAM_BOT_TOKEN = "7636098514:AAHbDD7H4g6zKxHp8dXk2wHAE5N53jY-KmQ"
+TELEGRAM_BOT_TOKEN = "enter your telegram bot token"
 
 # Allowed Contacts (Replace with actual contact numbers & corresponding chat IDs)
 ALLOWED_CONTACTS = {
+
     9529440255: 7206195146,
     9405895177: 8157014588,
+
+    "contact_number": "telegram_id"
+
 }
 
 # Function to send encryption key via Telegram if contact is authorized
@@ -31,7 +38,11 @@ async def send_key_via_telegram(contact, key):
             # Send the key to the authorized contact via Telegram
             bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
             await bot.send_message(chat_id=ALLOWED_CONTACTS[contact], text=f"🔐 Your Encryption Key: {key}")
+
             messagebox.showinfo("Success", f"Key sent to Telegram for {contact}! \n 🔑 Use the app with your shared decryption key to decode this.")
+
+            messagebox.showinfo("Success", f"Key sent to Telegram for {contact}!")
+
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send key: {e}")
     else:
@@ -67,6 +78,15 @@ def hide_secret():
         return
 
     crypto_steg = CryptoSteganography(encryption_key.get())
+
+    encrypted_message = encrypt_message(secret_message.get("1.0", "end-1c"), encryption_key.get())
+
+    try:
+        crypto_steg.hide(input_image_path, output_image_path, encrypted_message)
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to hide message: {e}")
+        return
+
     encrypted_message = encrypt_message(secret_message.get("1.0", "end-1c"), encryption_key.get())
 
     try:
@@ -77,10 +97,15 @@ def hide_secret():
         if not contact.isdigit():
             messagebox.showerror("Error", "Contact number must be numeric!")
             return
+
         
         # 🔐 Encrypt the key with MASTER_KEY before sending
         encrypted_key_to_send = encrypt_message(encryption_key.get(), MASTER_kEY)
         asyncio.run(send_key_via_telegram(int(contact), encrypted_key_to_send ))
+
+
+        asyncio.run(send_key_via_telegram(int(contact), encryption_key.get()))
+
 
         messagebox.showinfo("Success", "Message hidden successfully!")
     except Exception as e:
@@ -93,6 +118,7 @@ def extract_secret():
         messagebox.showerror("Error", "Please select an image and provide a key!")
         return
     
+
     encrypted_input_key = encryption_key.get()
 
      # Step 1: Decrypt the encrypted key using MASTER_kEY
@@ -110,7 +136,18 @@ def extract_secret():
         if encrypted_message is None:
             messagebox.showerror("Error", "No hidden message found in the image!")
             return
+
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to retrieve hidden message: {e}")
+        return
+
+    key = encryption_key.get()
+    crypto_steg = CryptoSteganography(key)
+
+    try:
+        # Use any valid key of length ≥ 16
     
+
 
         encrypted_message = crypto_steg.retrieve(image_path)
         print("Retrieved Encrypted Message:", encrypted_message)
@@ -119,7 +156,11 @@ def extract_secret():
             messagebox.showerror("Error", "No hidden message found in the image!")
             return
 
+
         decrypted_message = decrypt_message(encrypted_message, actual_key)
+
+        decrypted_message = decrypt_message(encrypted_message, key)
+
         if decrypted_message:
             messagebox.showinfo("Decrypted Message", decrypted_message)
         else:
@@ -128,7 +169,7 @@ def extract_secret():
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
-    
+
 def combine_funcs(*funcs): 
    
     def inner_combined_func(*args, **kwargs): 
@@ -137,6 +178,17 @@ def combine_funcs(*funcs):
             f(*args, **kwargs) 
     
     return inner_combined_func 
+
+    # if encrypted_message:
+
+    #     decrypted_message = decrypt_message(encrypted_message, encryption_key.get())
+    #     if decrypted_message:
+    #         messagebox.showinfo("Decrypted Message", decrypted_message)
+    #     else:
+    #         messagebox.showerror("Error", "Incorrect key! Unable to decrypt.")
+    # else:
+    #     messagebox.showerror("Error", "No hidden message found!")
+
 
 # Load and Display Image
 def load_image():
