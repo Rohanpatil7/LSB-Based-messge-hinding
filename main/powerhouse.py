@@ -19,13 +19,8 @@ TELEGRAM_BOT_TOKEN = "7636098514:AAHbDD7H4g6zKxHp8dXk2wHAE5N53jY-KmQ"
 
 # Allowed Contacts (Replace with actual contact numbers & corresponding chat IDs)
 ALLOWED_CONTACTS = {
-<<<<<<< Updated upstream
-    "9529440255": "7206195146",
-    "9876543210": "CHAT_ID_FOR_9876543210"
-=======
     9529440255: 7206195146,
     9405895177: 8157014588,
->>>>>>> Stashed changes
 }
 
 # Function to send encryption key via Telegram if contact is authorized
@@ -242,6 +237,9 @@ tk.Label(root, text="-----------------------------------------------------------
 # decryption_icon = tk.PhotoImage(file="C:/Users/ytroh/OneDrive/Documents/GitHub/Stegnography/main/shield.png")
 # tk.Button(root, text="Decrypt Encrypted Key", command=decrypt_key, image=decryption_icon, compound="left", bd=1, relief="solid").pack(pady=10)
 
+# # Label to display decrypted password
+# decrypted_password_label = tk.Label(root, text="Decrypted Password: ")
+# decrypted_password_label.pack(pady=5)
 
 # tk.Label(root, text="Decryption Key:").pack()
 # decryption_key_input = tk.Entry(root, width=40, show="*")
