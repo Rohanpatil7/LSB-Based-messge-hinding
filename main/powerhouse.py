@@ -16,9 +16,8 @@ import asyncio
 MASTER_kEY = "NextCyber@2023"
 
 
-
 # Telegram Bot Token (Replace with your actual bot token)
-TELEGRAM_BOT_TOKEN = "enter your telegram bot token"
+TELEGRAM_BOT_TOKEN = "7636098514:AAHbDD7H4g6zKxHp8dXk2wHAE5N53jY-KmQ"
 
 # Allowed Contacts (Replace with actual contact numbers & corresponding chat IDs)
 ALLOWED_CONTACTS = {
@@ -26,22 +25,18 @@ ALLOWED_CONTACTS = {
     9529440255: 7206195146,
     9405895177: 8157014588,
 
-    "contact_number": "telegram_id"
-
 }
 
 # Function to send encryption key via Telegram if contact is authorized
 async def send_key_via_telegram(contact, key):
     if contact in ALLOWED_CONTACTS:
         try:
-
             # Send the key to the authorized contact via Telegram
             bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
             await bot.send_message(chat_id=ALLOWED_CONTACTS[contact], text=f"🔐 Your Encryption Key: {key}")
 
             messagebox.showinfo("Success", f"Key sent to Telegram for {contact}! \n 🔑 Use the app with your shared decryption key to decode this.")
 
-            messagebox.showinfo("Success", f"Key sent to Telegram for {contact}!")
 
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send key: {e}")
@@ -87,7 +82,7 @@ def hide_secret():
         messagebox.showerror("Error", f"Failed to hide message: {e}")
         return
 
-    encrypted_message = encrypt_message(secret_message.get("1.0", "end-1c"), encryption_key.get())
+    # encrypted_message = encrypt_message(secret_message.get("1.0", "end-1c"), encryption_key.get())
 
     try:
         crypto_steg.hide(input_image_path, output_image_path, encrypted_message)
@@ -104,7 +99,7 @@ def hide_secret():
         asyncio.run(send_key_via_telegram(int(contact), encrypted_key_to_send ))
 
 
-        asyncio.run(send_key_via_telegram(int(contact), encryption_key.get()))
+        # asyncio.run(send_key_via_telegram(int(contact), encryption_key.get()))
 
 
         messagebox.showinfo("Success", "Message hidden successfully!")
@@ -146,9 +141,6 @@ def extract_secret():
 
     try:
         # Use any valid key of length ≥ 16
-    
-
-
         encrypted_message = crypto_steg.retrieve(image_path)
         print("Retrieved Encrypted Message:", encrypted_message)
 
@@ -174,7 +166,6 @@ def combine_funcs(*funcs):
    
     def inner_combined_func(*args, **kwargs): 
         for f in funcs: 
-   
             f(*args, **kwargs) 
     
     return inner_combined_func 
@@ -269,7 +260,7 @@ def delete_text():
     secret_message.delete("1.0", "end")
     encryption_key.delete(0, "end")
     contact_number.delete(0, "end")
-    input_image_path.delete(0, "end")
+    # input_image_path.delete(0, "end")
 
     
 # Hide and Extract Buttons
